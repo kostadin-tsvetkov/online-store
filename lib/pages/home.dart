@@ -63,25 +63,38 @@ class _HomeState extends State<Home> {
     final GoogleSignInAccount user = _googleSignIn.currentUser;
     final DocumentSnapshot doc = await _usersRef.doc(user.id).get();
 
-    createUserInFirestore(doc);
+    if (!doc.exists) {
+      //TODO: create user in forestore
+    }
   }
 
   loginWithGoogle() {
     _googleSignIn.signIn();
   }
 
-  logout() {
+  logoutWithGoogle() {
     _googleSignIn.signOut();
   }
 
+  logout() {
+    setState(() {
+      pageIndex = 0;
+      isAuthenticated = false;
+    });
+  }
+
   submitSignInForm() {
-    final formState = _formKey.currentState;
-    if (formState.validate()) {
-      formState.save();
-      username.trim();
-      password.trim();
-      signIn(username, password);
-    }
+    //TODO: Uncomment for demonstration
+    // final formState = _formKey.currentState;
+    // if (formState.validate()) {
+    //   formState.save();
+    //   username.trim();
+    //   password.trim();
+    //   signIn(username, password);
+    // }
+
+    //TODO: Remove after development and comment for demostration
+    signIn('1', '1');
   }
 
   signIn(String username, String password) async {
@@ -96,15 +109,15 @@ class _HomeState extends State<Home> {
     }
   }
 
-  createUserInFirestore(DocumentSnapshot doc) {
-    if (!doc.exists) {
-    } else {}
-  }
-
   @override
   void dispose() {
     pageController.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isAuthenticated ? buildAuthScreen() : buildUnAuthScreen();
   }
 
   onPageChanged(int pageIndex) {
@@ -118,39 +131,53 @@ class _HomeState extends State<Home> {
         duration: Duration(milliseconds: 250), curve: Curves.easeInOut);
   }
 
-  Widget buildAuthScreen() {
-    return RaisedButton(onPressed: () => logout(), child: Text('Logout'));
-  }
-
-  // Scaffold buildAuthScreen() {
-  //   return Scaffold(
-  //     body: PageView(
-  //       children: [Browse(), Search(), Cart(), Profile()],
-  //       controller: pageController,
-  //       onPageChanged: onPageChanged,
-  //       physics: NeverScrollableScrollPhysics(),
-  //     ),
-  //     bottomNavigationBar: CupertinoTabBar(
-  //       currentIndex: pageIndex,
-  //       onTap: onTapNavigationItem,
-  //       activeColor: Theme.of(context).primaryColor,
-  //       items: [
-  //         BottomNavigationBarItem(
-  //           icon: Icon(Icons.home),
-  //         ),
-  //         BottomNavigationBarItem(
-  //           icon: Icon(Icons.search),
-  //         ),
-  //         BottomNavigationBarItem(
-  //           icon: Icon(Icons.shopping_cart),
-  //         ),
-  //         BottomNavigationBarItem(
-  //           icon: Icon(Icons.account_circle),
-  //         ),
-  //       ],
-  //     ),
-  //   );
+  // Widget buildAuthScreen() {
+  //   return RaisedButton(onPressed: () => logout(), child: Text('Logout'));
   // }
+
+  Scaffold buildAuthScreen() {
+    return Scaffold(
+      body: PageView(
+        children: [
+          Browse(),
+          Search(),
+          Cart(),
+          //TODO: Uncoment to enable profile page
+          // Profile()
+          ListView(
+            children: [
+              RaisedButton(
+                  onPressed: () => logoutWithGoogle(),
+                  child: Text('Logout With Google')),
+              RaisedButton(onPressed: () => logout(), child: Text('Logout')),
+            ],
+          )
+        ],
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        currentIndex: pageIndex,
+        onTap: onTapNavigationItem,
+        activeColor: Theme.of(context).primaryColor,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+          ),
+        ],
+      ),
+    );
+  }
 
   Scaffold buildUnAuthScreen() {
     return Scaffold(
@@ -320,10 +347,5 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return isAuthenticated ? buildAuthScreen() : buildUnAuthScreen();
   }
 }
