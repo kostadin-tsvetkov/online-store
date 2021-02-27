@@ -63,16 +63,42 @@ class _HomeState extends State<Home> {
     final GoogleSignInAccount user = _googleSignIn.currentUser;
     final DocumentSnapshot doc = await _usersRef.doc(user.id).get();
 
-    if (!doc.exists) {
-    } else {}
+    createUserInFirestore(doc);
   }
 
-  login() {
+  loginWithGoogle() {
     _googleSignIn.signIn();
   }
 
   logout() {
     _googleSignIn.signOut();
+  }
+
+  submitSignInForm() {
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      username.trim();
+      password.trim();
+      signIn(username, password);
+    }
+  }
+
+  signIn(String username, String password) async {
+    final QuerySnapshot queryResult = await _usersRef
+        .where("email", isEqualTo: username)
+        .where("password", isEqualTo: password)
+        .get();
+    if (queryResult.size == 1) {
+      setState(() {
+        isAuthenticated = true;
+      });
+    }
+  }
+
+  createUserInFirestore(DocumentSnapshot doc) {
+    if (!doc.exists) {
+    } else {}
   }
 
   @override
@@ -125,13 +151,6 @@ class _HomeState extends State<Home> {
   //     ),
   //   );
   // }
-
-  submitSignInForm() {
-    final formState = _formKey.currentState;
-    if (formState.validate()) {
-      formState.save();
-    }
-  }
 
   Scaffold buildUnAuthScreen() {
     return Scaffold(
@@ -256,7 +275,7 @@ class _HomeState extends State<Home> {
               height: 45.0,
               width: 260.0,
               child: GestureDetector(
-                onTap: () => login(),
+                onTap: () => loginWithGoogle(),
                 child: Container(
                   padding: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
