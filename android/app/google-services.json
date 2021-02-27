@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "656496736753",
+    "project_id": "online-store-11455",
+    "storage_bucket": "online-store-11455.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656496736753:android:65f5fd0ec241d778ecac50",
+        "android_client_info": {
+          "package_name": "com.kostadints.onlinestore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656496736753-b5gt2pigfddajouit653jva7hl5fq8bl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kostadints.onlinestore",
+            "certificate_hash": "b3c460cc39d59959d5ba12e63e6e193101973b27"
+          }
+        },
+        {
+          "client_id": "656496736753-dct7rqa17ktjevqg5pkt871hc4cqk3e7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhzBWeZynHWetPhC9hF-O5KKaV4y2A0YQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "656496736753-dct7rqa17ktjevqg5pkt871hc4cqk3e7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "656496736753-qnuv0trhk1nn3qad9h31vcku568hipf7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kostadints.onlinestore"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
