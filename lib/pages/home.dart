@@ -98,15 +98,15 @@ class _HomeState extends State<Home> {
   }
 
   signIn(String username, String password) async {
-    final QuerySnapshot queryResult = await _usersRef
-        .where("email", isEqualTo: username)
-        .where("password", isEqualTo: password)
-        .get();
-    if (queryResult.size == 1) {
+    // final QuerySnapshot queryResult = await _usersRef
+    //     .where("email", isEqualTo: username)
+    //     .where("password", isEqualTo: password)
+    //     .get();
+    // if (queryResult.size == 1) {
       setState(() {
         isAuthenticated = true;
       });
-    }
+    // }
   }
 
   @override

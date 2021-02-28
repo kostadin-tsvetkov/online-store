@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:online_store/pages/home.dart';
 import 'package:online_store/widgets/progress.dart';
 
@@ -16,6 +17,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
     return FutureBuilder(
       future: _initialization,
       builder: (context, snapshot) {
@@ -26,8 +29,8 @@ class MyApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
             title: 'Online Store',
-            theme:
-                ThemeData(primarySwatch: Colors.blue, accentColor: Colors.purple),
+            theme: ThemeData(
+                primarySwatch: Colors.blue, accentColor: Colors.purple),
             initialRoute: '/',
             routes: {
               '/': (context) => Home(),

@@ -40,25 +40,34 @@ class _BrowseState extends State<Browse> {
   //   print(doc.data());
   // }
 
-  @override
+
+@override
   Scaffold build(BuildContext context) {
     return Scaffold(
       appBar: header(context, isAppTitle: true),
-      body: StreamBuilder(
-        stream: _productsRef.snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return circularProgress();
-          }
-          return Container(
-            child: ListView(
-              children: snapshot.data.docs
-              .map<Widget>((product) => Text(product['name']))
-              .toList(),
-            ),
-          );
-        },
-      ),
+      body: Text('Browse'),
     );
   }
+
+  // @override
+  // Scaffold build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: header(context, isAppTitle: true),
+  //     body: StreamBuilder(
+  //       stream: _productsRef.snapshots(),
+  //       builder: (context, snapshot) {
+  //         if (!snapshot.hasData) {
+  //           return circularProgress();
+  //         }
+  //         return Container(
+  //           child: ListView(
+  //             children: snapshot.data.docs
+  //             .map<Widget>((product) => Text(product['name']))
+  //             .toList(),
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 }
