@@ -102,9 +102,9 @@ class _HomeState extends State<Home> {
     //     .where("password", isEqualTo: password)
     //     .get();
     // if (queryResult.size == 1) {
-      setState(() {
-        isAuthenticated = true;
-      });
+    setState(() {
+      isAuthenticated = true;
+    });
     // }
   }
 
