@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
   final _formKey = GlobalKey<FormState>();
   String username;
   String password;
+  String userId;
 
   @override
   void initState() {
@@ -104,6 +105,7 @@ class _HomeState extends State<Home> {
     // if (queryResult.size == 1) {
     setState(() {
       isAuthenticated = true;
+      userId = 'Dzvl21Mh5P2E4bpJrTxv';
     });
     // }
   }
@@ -138,7 +140,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: PageView(
         children: [
-          Browse(),
+          Browse(userId: userId,),
           Search(),
           Cart(),
           //TODO: Uncoment to enable profile page

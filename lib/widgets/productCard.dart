@@ -7,11 +7,13 @@ import 'package:online_store/pages/detailsPage.dart';
 class ProductCard extends StatelessWidget {
   final Product product;
   final Function press;
+  final String userId;
 
   const ProductCard({
     Key key,
     this.product,
     this.press,
+    this.userId
   }) : super(key: key);
 
   @override
@@ -50,9 +52,9 @@ class ProductCard extends StatelessWidget {
           ),
           onTap: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DetailsPage(product: product))
-            );
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailsPage(product: product, userId: userId,)));
           },
         )
       ],

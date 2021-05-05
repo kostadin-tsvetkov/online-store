@@ -15,10 +15,11 @@ final CollectionReference _categoriesRef =
 List<Tab> _tabs = List<Tab>();
 
 class Browse extends StatefulWidget {
-  Browse({Key key}) : super(key: key);
+  final String userId;
+  Browse({Key key, this.userId}) : super(key: key);
 
   @override
-  _BrowseState createState() => _BrowseState();
+  _BrowseState createState() => _BrowseState(userId: userId);
 }
 
 class _BrowseState extends State<Browse> with SingleTickerProviderStateMixin {
@@ -27,6 +28,9 @@ class _BrowseState extends State<Browse> with SingleTickerProviderStateMixin {
   List<Category> categories = [];
   int tabIndex = -1;
   TabController _tabController;
+  String userId;
+
+  _BrowseState({this.userId});
 
   @override
   void initState() {
@@ -154,7 +158,7 @@ class _BrowseState extends State<Browse> with SingleTickerProviderStateMixin {
                     crossAxisSpacing: 20.0,
                   ),
                   itemBuilder: (context, index) =>
-                      ProductCard(product: productList[index])),
+                      ProductCard(product: productList[index], userId: userId,)),
             )),
           ],
         );
