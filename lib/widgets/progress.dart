@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 Container circularProgress() {
   return Container(
+    alignment: Alignment.center,
     child: CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation(Colors.lime),
     ),

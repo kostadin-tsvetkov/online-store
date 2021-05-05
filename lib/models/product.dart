@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product {
@@ -9,6 +7,7 @@ class Product {
   String description;
   double price;
   int availableQuantity;
+  String photoUrl;
 
   Product(
       {this.id,
@@ -16,17 +15,18 @@ class Product {
       this.titleLowerCase,
       this.description,
       this.price,
-      this.availableQuantity});
+      this.availableQuantity,
+      this.photoUrl});
 
   factory Product.fromDocument(DocumentSnapshot doc) {
     Product product = Product(
-      title: doc['title'],
-      titleLowerCase: doc['titleLowerCase'],
-      description: doc['description'],
-      price: doc['price'],
-      availableQuantity: doc['availableQuantity']
-    );
-    
+        title: doc['title'],
+        titleLowerCase: doc['titleLowerCase'],
+        description: doc['description'],
+        price: doc['price'],
+        availableQuantity: doc['availableQuantity'],
+        photoUrl: doc['photoUrl']);
+
     product.id = doc.id;
 
     return product;

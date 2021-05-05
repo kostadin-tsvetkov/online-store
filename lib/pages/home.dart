@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:online_store/pages/browse.dart';
 import 'package:online_store/pages/cart.dart';
-import 'package:online_store/pages/profile.dart';
 import 'package:online_store/pages/search.dart';
 
 final CollectionReference _usersRef =

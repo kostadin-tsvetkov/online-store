@@ -6,6 +6,7 @@ import 'package:online_store/widgets/progress.dart';
 final CollectionReference _productsRef =
     FirebaseFirestore.instance.collection('products');
 
+
 class Search extends StatefulWidget {
   Search({Key key}) : super(key: key);
 
@@ -21,7 +22,7 @@ class _SearchState extends State<Search> {
     searchParameter.toLowerCase();
 
     final Future<QuerySnapshot> result = _productsRef
-        .where("titleLowerCase", isGreaterThanOrEqualTo: searchParameter)
+        .where("titleLowerCase", isEqualTo: searchParameter)
         .get();
     setState(() {
       searchResultFuture = result;
@@ -69,17 +70,45 @@ class _SearchState extends State<Search> {
         if (!snapshot.hasData) {
           return circularProgress();
         }
-        List<Text> searchResult = [];
+        List<ProductResult> searchResult = [];
 
         snapshot.data.docs.forEach((doc) {
           Product product = Product.fromDocument(doc);
-          searchResult.add(Text(product.title));
+          searchResult.add(ProductResult(product));
         });
 
         return ListView(
           children: searchResult,
         );
       },
+    );
+  }
+}
+
+class ProductResult extends StatelessWidget {
+  final Product product;
+
+  ProductResult(this.product);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          GestureDetector(
+            onTap: () => print('Tapped'),
+            child: ListTile(
+              leading: Image.network(product.photoUrl),
+              title: Text(product.title, style: TextStyle(fontWeight: FontWeight.bold),),
+              subtitle: Text(product.description),
+            ),
+          ),
+          Divider(
+            height: 2.0,
+            color: Colors.black,
+          ),
+        ],
+      ),
     );
   }
 }
