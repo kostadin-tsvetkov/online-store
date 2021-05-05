@@ -142,7 +142,7 @@ class _HomeState extends State<Home> {
         children: [
           Browse(userId: userId,),
           Search(),
-          Cart(),
+          Cart(userId: userId,),
           //TODO: Uncoment to enable profile page
           // Profile()
           ListView(
