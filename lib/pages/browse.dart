@@ -32,16 +32,18 @@ class _BrowseState extends State<Browse> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     getCategories();
-    _tabController = new TabController(vsync: this, length: categories.length);
-    _tabController.addListener(_setActiveTabIndex);
   }
 
   void _setActiveTabIndex() {
     setState(() {
-      tabIndex = _tabController.index;    
+      tabIndex = _tabController.index;
     });
-  
-}
+  }
+
+  initTabController() {
+    _tabController = new TabController(vsync: this, length: categories.length);
+    _tabController.addListener(_setActiveTabIndex);
+  }
 
   //method for fetching the categories
   getCategories() async {
@@ -52,6 +54,7 @@ class _BrowseState extends State<Browse> with SingleTickerProviderStateMixin {
     });
     setState(() {
       categories.addAll(categoriesTmp);
+      initTabController();
     });
   }
 
@@ -60,13 +63,12 @@ class _BrowseState extends State<Browse> with SingleTickerProviderStateMixin {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppBar(
-          bottom: TabBar(
-            controller: _tabController,
-            indicatorColor: Colors.blue,
-            isScrollable: true,
-            tabs: getTabs(),
-          )
-        ),
+            bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: Colors.blue,
+          isScrollable: true,
+          tabs: getTabs(),
+        )),
       ),
       body: buildProductListing(),
     );
@@ -114,6 +116,30 @@ class _BrowseState extends State<Browse> with SingleTickerProviderStateMixin {
           Product product = Product.fromDocument(doc);
           productList.add(product);
         });
+
+        if (productList.length == 0) {
+          return Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 100),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "No products in this category",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                        // textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        }
 
         return Row(
           children: [
